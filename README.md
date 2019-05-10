@@ -5,6 +5,8 @@ Go Scheduler helps you to manage functions that should be executed every N secon
 
 See it in action:
 
+## Example #1
+
 ```go
 package main
 
@@ -42,4 +44,50 @@ func collectStatistics(ctx context.Context) {
 	fmt.Printf("stats updated at %s\n", time.Now().String())
 }
 
+```
+
+## Example #2
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	"os/signal"
+	"time"
+
+	"github.com/zhashkevych/scheduler"
+)
+
+func main() {
+	ctx := context.Background()
+
+	sc := scheduler.NewScheduler()
+	sc.Add(ctx, testFunc, time.Second*2)
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, os.Interrupt)
+
+	<-quit
+}
+
+func testFunc(ctx context.Context) {
+	ctx, _ = context.WithTimeout(ctx, time.Second*5)
+
+	i := 0
+	for {
+		time.Sleep(time.Millisecond * 100)
+		i++
+		fmt.Printf("%d ", i)
+
+		select {
+		case <-ctx.Done():
+			fmt.Println()
+			return
+		default:
+		}
+	}
+}
 ```
