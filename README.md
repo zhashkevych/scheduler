@@ -26,12 +26,11 @@ func main() {
 	worker.Add(ctx, parseSubscriptionData, time.Second*5)
 	worker.Add(ctx, sendStatistics, time.Second*10)
 
-	time.AfterFunc(time.Minute*1, worker.Stop)
-
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, os.Interrupt, os.Interrupt)
 
 	<-quit
+	worker.Stop()
 }
 
 func parseSubscriptionData(ctx context.Context) {
@@ -71,6 +70,7 @@ func main() {
 	signal.Notify(quit, os.Interrupt)
 
 	<-quit
+	worker.Stop()
 }
 
 func testFunc(ctx context.Context) {
