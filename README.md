@@ -23,8 +23,8 @@ func main() {
 	ctx := context.Background()
 
 	worker := scheduler.NewScheduler()
-	worker.Add(ctx, parseLatestPosts, time.Second*5)
-	worker.Add(ctx, collectStatistics, time.Second*10)
+	worker.Add(ctx, parseSubscriptionData, time.Second*5)
+	worker.Add(ctx, sendStatistics, time.Second*10)
 
 	time.AfterFunc(time.Minute*1, worker.Stop)
 
@@ -34,14 +34,14 @@ func main() {
 	<-quit
 }
 
-func parseLatestPosts(ctx context.Context) {
+func parseSubscriptionData(ctx context.Context) {
 	time.Sleep(time.Second * 1)
-	fmt.Printf("latest posts parsed successfuly at %s\n", time.Now().String())
+	fmt.Printf("subscription parsed successfuly at %s\n", time.Now().String())
 }
 
-func collectStatistics(ctx context.Context) {
+func sendStatistics(ctx context.Context) {
 	time.Sleep(time.Second * 5)
-	fmt.Printf("stats updated at %s\n", time.Now().String())
+	fmt.Printf("statistics sent at %s\n", time.Now().String())
 }
 
 ```
