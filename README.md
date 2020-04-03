@@ -1,6 +1,8 @@
 Go Scheduler
 ================================
 
+## <a href="https://medium.com/@zhashkevych/simple-scheduling-library-golang-384ad72717f5">Blog Post</a>
+
 Go Scheduler helps you to manage functions that should be executed every N seconds/minutes/hours etc.
 
 See it in action:
