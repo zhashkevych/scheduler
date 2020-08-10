@@ -45,6 +45,7 @@ func (s *Scheduler) process(ctx context.Context, j Job, interval time.Duration) 
 			j(ctx)
 		case <-ctx.Done():
 			s.wg.Done()
+			ticker.Stop()
 			return
 		}
 	}
