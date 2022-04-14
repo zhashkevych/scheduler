@@ -37,7 +37,7 @@ func main() {
 
 func parseSubscriptionData(ctx context.Context) {
 	time.Sleep(time.Second * 1)
-	fmt.Printf("subscription parsed successfuly at %s\n", time.Now().String())
+	fmt.Printf("subscription parsed successfully at %s\n", time.Now().String())
 }
 
 func sendStatistics(ctx context.Context) {
